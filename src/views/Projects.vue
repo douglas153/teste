@@ -18,7 +18,7 @@
           label="Starting Zip"
           v-model="startingZip"
           ></v-text-field >
-          <span>{{ startingCity }}</span>
+          <span>{{ startingCity }}</span> <span>CIDADE: {{ localidade }}</span>
             </v-col >
             <v-col>
           <v-text-field
@@ -36,7 +36,25 @@
 
               >Submit</v-btn>
             </v-col>
+            <v-col>
+          <v-text-field
+            outlined
+          label="Cidade"
+          v-model="localidade"
+          ></v-text-field>
+          <span>{{ endingZip }} </span>
+            </v-col>
           </v-row>
+            <v-row> 
+            <v-col cols="12" class="mt-12">
+          <v-tooltip  top>
+            <template v-slot:activator="{ on }">
+                <v-icon  v-on="on" color="grey lighten-1">mdi-cart</v-icon>
+            </template>
+            <span>Programmatic tooltip</span>
+          </v-tooltip>
+        </v-col>
+      </v-row>
 
       </v-container>
    
@@ -56,14 +74,16 @@ export default {
     return {
       startingZip: '',
       startingCity: '', 
+      localidade: '', 
       endingZip: '', 
       endingCity: '', 
+      cep: '71261035',
     } 
   },
     watch: {
       startingZip: function(){
         this.startingCity = '' 
-        if (this.startingZip.length == 5) {
+        if (this.startingZip.length == 8) {
           this.lookupStartingZip()
         }
       }
@@ -73,10 +93,12 @@ export default {
     lookupStartingZip: function() {
       var app = this
       app.startingCity = "Searching..." 
+      app.localidade = "Searching..." 
     const axios = require('axios');
-    axios.get('http://ziptasticAPI.com/' + app.startingZip )
+    axios.get('https://viacep.com.br/ws/'+ app.startingZip + '/json/')
         .then(function (response) {
-          app.startingCity = response.data.city + ', ' + response.data.state
+          app.startingCity = response.data.logradouro + ', ' + response.data.localidade
+          app.localidade = response.data.localidade
         })
       .catch (function (error) {
         app.startingCity = 'Invalid ZipCode'
