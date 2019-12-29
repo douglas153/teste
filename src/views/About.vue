@@ -1,66 +1,56 @@
 <template>
   <div class="about">
+    <h2>{{ count }}</h2>
 
-<h3 class="display-1">Novo Banco</h3>
+    <v-text-field v-model="tak" v-on:keypress.enter="addNewTask()"></v-text-field>
+
+    <Input @increment="incrementCount" :count="count" />
+
+    <h3>Lista</h3>
+
+    <produtolista />
+
+    <Message  :tak="tak" @add-New-Bus="incrementCount" />
+
+   <!-- <v-btn v-on:click="show()">Salvar</v-btn> -->
+
     
-<v-card flat class="pa2">
-        <v-layout row wrap justify-center>
-          <v-flex xs12 md6>
-            <div class="display-1	 black--text">Nome:</div>
-             <v-text-field outlined></v-text-field>
-             <div class="display-1	 black--text">Valor:</div>
-            
-             <v-text-field outlined v-model.lazy="price" :v-money="money"></v-text-field>
-             
-             </v-flex>
-             
-          </v-layout>
-
-
-      </v-card>
-    
-<h3 class="display-1">Produtos</h3>
-<v-container class="display-1" fluid>
-  <v-card  class="pa5" height="400" color=" black--text" >
-       <div color=" black--text" >
-      <v-checkbox class="font-weight-black  red--text" v-model="checkbox1" :label="`CGI: ${checkbox1.toString()}`"></v-checkbox><br></div> 
-      <v-checkbox class="font-weight-black"  v-model="checkbox2" :label="`CGV: ${checkbox2.toString()}`"></v-checkbox><br>
-      <v-checkbox class="font-weight-black" v-model="checkbox3" :label="`Regulaçao Fundiaria: ${checkbox3.toString()}`"></v-checkbox><br>
-      <v-checkbox class="font-weight-black" v-model="checkbox4" :label="`Financiamento Imovel: ${checkbox4.toString()}`"></v-checkbox><br>
-      
-      
-      </v-card>
-    </v-container>
-
   </div>
 </template>
 
 <script>
+import Input from "../components/Input";
+import produtolista from "../components/produtolista";
+import Message from "../components/Message";
 
+import { bus } from "../main";
 export default {
-  data () {
-        return {
-            price: 123.45,
-        money: {
-          
-          decimal: ',',
-          thousands: '.',
-          prefix: 'R$ ',
-          suffix: ' #',
-          precision: 2,
-          masked: false
-        },
+  components: {
+    Input,
+    produtolista,
+    Message
+  },
+  data() {
+    return {
+      count: 1,
+      tak: 0
+    };
+  },
+  methods: {
+ 
+    addNewTask() {
+      //   this.$root.$emit('New task', this.task);
+      this.tak = "task 4";
+      bus.$emit("new-task", this.tak);
+      alert(this.tak);
+    }, 
+    addNewBus(){
+      this.$emit('add-New-Bus')
+    },
+       incrementCount() {
+      this.count += 1;
+    },
 
-          checkbox1: true,
-          checkbox2: true,
-          checkbox3: true,
-          checkbox4: true,
-      radioGroup: 1,
-      switch1: true,
-
-      }
   }
-}
-
-
+};
 </script>

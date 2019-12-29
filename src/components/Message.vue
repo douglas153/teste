@@ -1,44 +1,46 @@
 <template> 
     <div>
-        
-        <p>Copyright 2017 {{ title }}</p>
-            <p v-if="cpf">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi necessitatibus molestiae modi id
-                 nulla nostrum maiores beatae quaerat, illo placeat ab amet architecto eveniet doloremque nobis veniam deleniti nihil aliquid.</p>
-        
+      
+       <ul v-for="(task, i) in tasks" :key="i">
+         <li>{{ task.text}}</li>
+       </ul>
 
-       
-
-             
+      <v-btn v-on:click="show()">Salvar</v-btn>
+        
+           
+           
     </div>
 </template> 
 
 <script>
-import { bus } from '../main';
 
 
-
+import { bus } from '../main'
 export default {
-    props: ['title', 'cpf'],
+    props: ['title', 'count', 'tak'],
     data () {
         return {
-            message: '',
-            cnpj: false,
-            counter: 0
+          number: 0,
+              tasks: [
+        {text: "task 1"},
+        {text: "task 2" },
+        {text: "task 3"},
+      ]
 
         }
     },
-    created(){
-        bus.$on('titleChanged', (data) => {
-            this.title = data;
-        })
-            bus.$on('cpfChanged', (data) => {
-            this.cpf = data;
-        });
-    },
-    
 
-  
+  created() {
+bus.$on('new-tak', (tak) => {
+  this.count = tak;
+  this.task.push(tak)
+});
+  } 
+
+ /*     this.$root.$on("New task", (task) => {
+        this.task.push(task);
+      });
+  } */
     }
-
 
  </script> 

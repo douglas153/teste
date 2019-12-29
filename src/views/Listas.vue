@@ -1,52 +1,49 @@
 <template>
   <div>
-     
-       
-      <produtolista :title="title" v-on:changeTitle="updatedTitle($event)" v-on:changeCpf="condCpf($event)" />
-      
-     
-
-
-
-      <Message :title="title"/>
-
-
-
+    <v-app>
+     <v-container>
+          <v-row> 
+          <v-col cols="12" lg="6">
+          <v-menu
+            v-model="menu2"
+            :close-on-content-click="false"
+            max-width="290"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                :value="computedDateFormattedDatefns"
+                clearable
+                label="Formatted with datefns"
+                readonly
+                v-on="on"
+                @click:clear="date = null"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="date"
+              @change="menu2 = false"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
   </div>
 </template>
 
 <script>
 
-import produtolista from '@/components/produtolista'
-import  Message from '@/components/Message'
-
-
 export default {
-   components: {
-       'produtolista': produtolista,
-       'Message': Message,
-        
-   },
     
     data () {
         return {
-             products: [
-            {name: "douglas ", price: 2, show: false},
-            {name: "do ", price: 1, show: false},
-            {name: "popop ", price: 3, show: false}
-            ], 
-            cpf: false,
-            title: 'Vue Wizards' 
-        
+   
         }
     },
   methods: {
-      updateTitle: function(updatedTitle){
-        this.title = updatedTitle;
-      },
-      condCpf: function (condCpf){
-          this.cpf = condCpf;
-      }
+   computedDateFormattedDatefns () {
+      return this.date ? format(this.date, 'dddd, MMMM Do YYYY') : ''
+    },
     }  
 
 }

@@ -1,43 +1,32 @@
 <template>
-    <div>
-         <v-btn outlined v-on:click="changeTitle">Robot</v-btn>
+  <div>
+    <v-list>
+      <v-list-item v-for="task  in task" :key="task.text" link></v-list-item>
+      <v-list-item-content>
+            <v-list-item-title >{{ task.text }}</v-list-item-title>
+          </v-list-item-content>
+    </v-list>
 
-          <v-btn outlined v-on:click="changeCpf">CPF</v-btn>
-
-         <h1 >{{ title }}</h1>    
-        
-      
-    </div>
+    <ul>
+      <li v-for="task  in task" :key="task.text" >{{ task.text }}</li>
+    </ul>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum, incidunt placeat. Voluptatum, culpa dignissimos dolores eos repellat,
+       ex officiis sed tempore mollitia repellendus temporibus vel recusandae ut, veniam harum ea.</p>
+  </div>
 </template>
 
 <script>
-import { bus } from '../main'
-
-
 export default {
-
-  props: ['title'], 
-   
-
-  
-    data () {
-        return { 
-           
-        }
-    },
-   methods: {
-      changeTitle: function(){                       // emit -- jogar essa funcao no outro componente
-        // this.$emit('changeTitle', 'Vue Ninjas');
-        this.title = 'Vue Ninjas';
-        bus.$emit('titleChanged', this.title);
-      },
-      changeCpf: function(){                       // emit -- jogar essa funcao no outro componente
-        // this.$emit('changeTitle', 'Vue Ninjas');
-        this.cpf = true;
-        bus.$emit('cpfChanged', this.cpf);
-      }
-
-    }
-}
+  data() {
+    return {
+      tasks: [
+        {text: "task 1"},
+        {text: "task 2" },
+        {text: "task 3"},
+      ]
+    };
+  },
+  methods: {}
+};
 </script>
 
