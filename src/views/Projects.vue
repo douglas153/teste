@@ -1,60 +1,61 @@
 <template>
   <div class="projects">
-    <v-container class="cont">
-      <div class="c">Fill this form</div>
-      <hr />
-      <v-row>
-        <v-col cols="12" sm="6" md="6">
-          <v-text-field outlined label="Starting Zip" v-model="startingZip"></v-text-field>
-          <span>{{ startingCity }}</span>
+    
+      <v-container
+      
+     class="cont"
+      >
+          <div class="c">Fill this form </div>
+          <hr>
+          <v-row >
+            <v-col
+            cols="12"
+            sm="6"
+            md="6"
+            >
+            <v-text-field
+            outlined
+          label="Starting Zip"
+          v-model="startingZip"
+          ></v-text-field >
+          <span>{{ startingCity }}</span> <span>CIDADE: {{ localidade }}</span>
+            </v-col >
+            <v-col>
+          <v-text-field
+            outlined
+          label="Ending Zip"
+          v-model="endingZip"
+          ></v-text-field>
+          <span>{{ endingZip }} </span>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-btn
+              color="blue"
+
+              >Submit</v-btn>
+            </v-col>
+            <v-col>
+          <v-text-field
+            outlined
+          label="Cidade"
+          v-model="localidade"
+          ></v-text-field>
+          <span>{{ endingZip }} </span>
+            </v-col>
+          </v-row>
+            <v-row> 
+            <v-col cols="12" class="mt-12">
+          <v-tooltip  top>
+            <template v-slot:activator="{ on }">
+                <v-icon  v-on="on" color="grey lighten-1">mdi-cart</v-icon>
+            </template>
+            <span>Programmatic tooltip</span>
+          </v-tooltip>
         </v-col>
-        <v-col>
-          <v-text-field outlined label="Ending Zip" v-model="endingZip"></v-text-field>
-          <span>{{ endingZip }}</span>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-btn color="blue">Submit</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-<hr>
-    <v-container >
-      <v-form
-        ref="form"
-        v-model="form"
-        class="pa-4 pt-6">
-      <v-row  sm="12">
-      <v-col md="6">
-        <v-text-field counter="10" v-model="pesquisa.nome" :rules="[rules.nome]" label="Nome"></v-text-field>
-      </v-col>
       </v-row>
 
-      <v-row>
-      <v-col md="6">
-        <v-text-field counter="10" v-model="pesquisa.sobrenome" :rules="[rules.sobrenome]" label="Sobrenome"></v-text-field>
-      </v-col>
-      </v-row>
-      <v-row>
-      <v-col md="6">
-        <v-text-field v-model="pesquisa.idade"  label="Idade"></v-text-field>
-      </v-col>
-    </v-row>
-    </v-form>
-    <v-btn
-    :disabled="!form"
-    v-on:click="salvar()"
-     color="blue">Salvar</v-btn>
-
-      <v-btn
-    v-on:click="post"
-     color="warning">Send</v-btn>
-
-     <h2>Preview form</h2>
-      <div>Nome: {{ pesquisa.nome }}</div>    
-      <div>Sobrenome: {{ pesquisa.sobrenome }}</div>
-      <div>Idade: {{ pesquisa.idade }}</div>
       </v-container>
   </div>
 </template>
@@ -64,42 +65,33 @@
 export default {
   data() {
     return {
-      startingZip: "",
-      startingCity: "",
-      endingZip: "",
-      endingCity: "",
-      form: false,
-
-      pesquisa: {
-        nome:'',
-        sobrenome: '', 
-        idade: 0, 
-      },
-      rules: {
-        nome: 
-        v => !!v || 'This field is required',
-        sobrenome: 
-        v => !!v || 'This field is required'
-      }
-    };
+      startingZip: '',
+      startingCity: '', 
+      localidade: '', 
+      endingZip: '', 
+      endingCity: '', 
+      cep: '71261035',
+    } 
   },
-  watch: {
-    startingZip: function() {
-      this.startingCity = "";
-      if (this.startingZip.length == 5) {
-        this.lookupStartingZip();
+    watch: {
+      startingZip: function(){
+        this.startingCity = '' 
+        if (this.startingZip.length == 8) {
+          this.lookupStartingZip()
+        }
       }
-    }
-  },
+    },
+  
   methods: {
     lookupStartingZip: function() {
-      var app = this;
-      app.startingCity = "Searching...";
-      const axios = require("axios");
-      axios
-        .get("http://ziptasticAPI.com/" + app.startingZip)
-        .then(function(response) {
-          app.startingCity = response.data.city + ", " + response.data.state;
+      var app = this
+      app.startingCity = "Searching..." 
+      app.localidade = "Searching..." 
+    const axios = require('axios');
+    axios.get('https://viacep.com.br/ws/'+ app.startingZip + '/json/')
+        .then(function (response) {
+          app.startingCity = response.data.logradouro + ', ' + response.data.localidade
+          app.localidade = response.data.localidade
         })
         .catch(function(error) {
           app.startingCity = "Invalid ZipCode";
