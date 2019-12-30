@@ -2,30 +2,10 @@
   <div>
     <v-app>
      <v-container>
-          <v-row> 
-          <v-col cols="12" lg="6">
-          <v-menu
-            v-model="menu2"
-            :close-on-content-click="false"
-            max-width="290"
-          >
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                :value="computedDateFormattedDatefns"
-                clearable
-                label="Formatted with datefns"
-                readonly
-                v-on="on"
-                @click:clear="date = null"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="date"
-              @change="menu2 = false"
-            ></v-date-picker>
-          </v-menu>
-        </v-col>
-      </v-row>
+       
+
+      <productOne /> 
+
     </v-container>
   </v-app>
   </div>
@@ -33,7 +13,12 @@
 
 <script>
 
+import productOne from '../components/productOne'
+
 export default {
+  components: {
+    productOne
+  },
     
     data () {
         return {
@@ -41,9 +26,7 @@ export default {
         }
     },
   methods: {
-   computedDateFormattedDatefns () {
-      return this.date ? format(this.date, 'dddd, MMMM Do YYYY') : ''
-    },
+  
     }  
 
 }
