@@ -2,23 +2,29 @@
   <div class="produtos">
     <h1 display-2 class="subheading black--text">Produtos</h1>
 
-    <v-layout justify-left>
-      <v-flex xs12 md3>
-        <div class="title black--text">Nome:</div>
-        <v-text-field regular class="md6" placeholder="Nome" v-model="nome"></v-text-field>
+          <v-row>
+              <v-col cols="12" md="4">
+        <v-text-field   label="Nome" v-model="nome"></v-text-field></v-col>
 
-        <div class="title black--text">Quantidade:</div>
-        <v-text-field regular class="md6" placeholder="Qtd" v-model="qtd"></v-text-field>
+        <v-col cols="12" md="4">
+        <v-text-field   label="Sobrenome" v-model="sobrenome"></v-text-field></v-col>
 
-        <div class="title black--text">Valor:</div>
-        <v-text-field regular class="md6" placeholder="Valor" v-model="valor"></v-text-field>
-      </v-flex>
-    </v-layout>
+        <v-col cols="12" md="4">
+        <v-text-field   label="Idade" v-model="idade"></v-text-field></v-col>
+      </v-row>
+      <v-row> 
+      <v-col cols="12" md="4">
+        <v-text-field   label="Nacionalidade" v-model="nacionalidade"></v-text-field></v-col>
 
-    <v-btn depressed left color="blue" @click="salvar">
+        <v-col cols="12" md="4">
+        <v-text-field   label="Texto" v-model="texto"></v-text-field></v-col>
+        <v-col cols="12" md="4" class="mt-3">
+        <v-btn depressed left color="blue" @click="salvar">
       <v-icon left>mdi-folder</v-icon>
       <span>Salvar</span>
-    </v-btn>
+    </v-btn></v-col>
+    </v-row>
+    <div>{{ person.nome }}</div>
 
     <div id="app">
       <v-app id="inspire">
@@ -27,16 +33,27 @@
     </div>
 
     <h1>to do</h1>
-    <ul>
-      <li v-for="todo of todos" :key="todo.id">{{todo.name}}</li>
-    </ul>
+   
   </div>
 </template>
 
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
     <script>
+    import { mapState } from 'vuex'
+import firebase from '@/fb'
+import db from '../../src/fb'
+
 export default {
   data() {
     return {
+
+        nome: '',
+        sobrenome: '', 
+        idade: 0, 
+        nacionalidade: '', 
+        texto: '', 
+    
+
       headers: [
         {
           text: "ID",
@@ -63,8 +80,25 @@ export default {
   },
   methods: {
     salvar() {
-      console.log(this.nome, this.qtd, this.valor);
+        const person = {
+            nome: this.nome,
+            sobrenome: this.sobrenome,
+            idade: this.idade,
+            nacionalidade: this.nacionalidade,
+            texto: this.texto 
+        }
+        this.$store.dispatch('createList', person)
+
     }
+  },
+    computed: mapState({
+    nome: state => state.nome,
+  }),
+  computed:{
+        person() {
+        return this.$store.getters.loadedList
+      }
   }
+
 };
 </script>
