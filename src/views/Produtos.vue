@@ -24,7 +24,6 @@
       <span>Salvar</span>
     </v-btn></v-col>
     </v-row>
-    <div>{{ person.nome }}</div>
 
     <div id="app">
       <v-app id="inspire">
@@ -46,7 +45,7 @@ import db from '../../src/fb'
 export default {
   data() {
     return {
-
+        
         nome: '',
         sobrenome: '', 
         idade: 0, 

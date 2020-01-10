@@ -5,7 +5,7 @@
 
       <v-footer
         absolute
-        class="font-weight-medium" color="blue"
+        class="font-weight-medium" color="light-blue darken-4"
       >
         <v-col
           class="text-center"

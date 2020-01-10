@@ -1,38 +1,33 @@
 <template>
 
-<nav>
-    <v-toolbar class="blue" >
+ <v-app-bar
+        color="light-blue darken-4"
+        dark
+        max-height="60"
+      >
         <Popup />
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>
-        <span class="font-weight-light">Cadastro</span>
-        <span>Banco</span>    
-        </v-toolbar-title>
+        <v-app-bar-nav-icon @click.stop="openDrawer"></v-app-bar-nav-icon>
+        
+        <v-icon  color="white">mdi-summit</v-icon>
+         <v-app-title class="mt-1 ml-2 body-1" >Everest</v-app-title>
         <v-spacer></v-spacer>
       
-        <v-btn depressed right color="white" router :to="rout">
-            <span>Log in</span>
-            <v-icon right>mdi-face</v-icon>
+        <v-btn  right class="blue lighten-5 black--text"  router :to="rout">Entrar
+            <v-icon right color="black">mdi-face</v-icon>
         </v-btn>
-    </v-toolbar>
-    
-
-    
-
-
-</nav>
+ </v-app-bar>
 
 </template>
 
 <script> 
 
-
+import { bus } from "../main"
 
 export default {
   
     data () {
         return {
-           drawer: null,
+           drawer: false,
             rout: '/about',
             site: 'https://www.aliexpress.com',
             links: [
@@ -42,9 +37,12 @@ export default {
                 {icon: 'mdi-briefcase' , text: 'Produtos', route: '/produtos'},
                 {icon: 'mdi-cloud' , text: 'Listas', route: '/listas'},
             ]
-
-            
-            
+        }
+    },
+    methods: {
+        openDrawer: function(){
+            this.drawer = true 
+            bus.$emit('openDrawer', true)
         }
     }
 

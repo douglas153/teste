@@ -1,8 +1,8 @@
 <template>
 <div>
     
-    <v-navigation-drawer v-model="drawer" app class="blue">
-        
+    <v-navigation-drawer v-model="drawer" app class="light-blue darken-4">
+        <v-icon color="white" @click.stop="drawer = !drawer">mdi-format-list-bulleted</v-icon>
           <v-flex class="mt-4 mb-3">
         
     </v-flex>
@@ -27,12 +27,12 @@
 <script>
 
 
-
+import { bus } from "../main"
 export default {
     
     data () {
         return {
-           
+           drawer: false, 
             rout: '/about',
             site: 'https://www.aliexpress.com',
             links: [
@@ -42,10 +42,12 @@ export default {
                 {icon: 'mdi-briefcase' , text: 'Produtos', route: '/produtos'},
                 {icon: 'mdi-cloud' , text: 'Listas', route: '/listas'},
             ]
-
-            
-            
         }
+    },
+    created(){
+        bus.$on('openDrawer', (data) => {
+            this.drawer = data; 
+        })
     }
 
      
