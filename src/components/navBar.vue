@@ -50,3 +50,10 @@ export default {
 
 }
 </script>
+<style lang="scss" scoped>
+.v-app-bar {
+  width: auto;
+  text-decoration: none;
+  background: linear-gradient(0deg, #00132b 12%, #123954 86%);
+}
+</style>

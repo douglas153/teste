@@ -1,19 +1,17 @@
 <template>
-  <v-app class="grey lighten-3" >
+  <v-app  >
     <navBar />
 
     <drawer />
-
+    <div id="text">LOGO</div>
     <navFoot />
    
     
     <v-content class="mx-4 mb-4">
       <router-view></router-view>
 
-    
     </v-content>
   </v-app>
-
 
 </template>
 
@@ -40,3 +38,9 @@ export default {
   
 };
 </script>
+
+<style lang="scss">
+@import 'src/styles/style.scss';
+
+</style>
+

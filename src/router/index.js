@@ -5,6 +5,7 @@ import Projects from '../views/Projects.vue'
 import About from '../views/About.vue' 
 import Produtos from '../views/Produtos.vue' 
 import Listas from '../views/Listas.vue' 
+import Registration from '../views/Registration.vue' 
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,12 @@ const routes = [
     name: 'listas',
     component: Listas
     },
+    {
+    path: '/Registration',
+    name: 'registration',
+    component: Registration
+    },
+    
 ]
 
 const router = new VueRouter({

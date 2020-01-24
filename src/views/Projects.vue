@@ -23,10 +23,10 @@
             <v-col>
           <v-text-field
             outlined
-          label="Ending Zip"
+          label="UF"
           v-model="endingZip"
           ></v-text-field>
-          <span>{{ endingZip }} </span>
+          <span>estado: {{ estado1 }} </span> <span>UF: {{ uf }}</span>
             </v-col>
           </v-row>
           <v-row>
@@ -53,9 +53,32 @@
             </template>
             <span>Programmatic tooltip</span>
           </v-tooltip>
+            </v-col>
+          <v-col cols="12" md="4">
+         <v-select
+         outlined
+         v-model="select"
+         label="selecionar estado"
+        :items="estado"
+        item-text="content"
+        item-value="key"
+         >
+
+         </v-select>
         </v-col>
       </v-row>
+     
+<div>
+    <ul v-for="list  in lista" :key="list.id">
+       <li >{{ lista.id }}</li>
+      <li >{{ lista.nome }}</li>
+     <li >{{ lista.sigla }}</li>
+    </ul></div>
 
+<span>
+   data:  {{cidade}} 
+</span><br>
+<span>dados select:  {{select}}</span>
       </v-container>
   </div>
 </template>
@@ -71,6 +94,17 @@ export default {
       endingZip: '', 
       endingCity: '', 
       cep: '71261035',
+      cidade: '',
+      estado1: '',
+ select: "",
+      estado: [
+        { key: 12, content: "AC" },
+        { key: 33, content: "RJ" },
+        { key: 29, content: "BA" },
+        { key: 41, content: "PR" },
+        { key: 51, content: "GO" },
+        { key: 53, content: "DF " },
+      ],
     } 
   },
     watch: {
@@ -79,7 +113,20 @@ export default {
         if (this.startingZip.length == 8) {
           this.lookupStartingZip()
         }
-      }
+      },
+      endingZip: function(){
+        this.endingCity = '' 
+        if (this.endingZip.length == 2) {
+          this.lookupEndingZip()
+        }
+      },
+     
+    },
+  
+    created: {
+        itens(){
+            this.lista = this.lookupEndingZip()
+        }, 
     },
   
   methods: {
@@ -97,6 +144,26 @@ export default {
           app.startingCity = "Invalid ZipCode";
         });
     },
+       lookupEndingZip: function() {
+      var app1 = this
+      app1.endingCity = "Searching..." 
+      app1.cidade = "Searching..." 
+    const axios = require('axios');
+    axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + app1.endingZip)
+        .then(function (response) {
+          app1.cidade = response.data.sigla + ', ' + response.data.nome
+           app1.estado = response.data.sigla
+        app1.localidade= response.data.nome
+          app1.nome = response.data.nome
+        })
+        .catch(function(error) {
+          app1.endingCity = "Invalid ZipCode";
+        });
+    },
+        
+
+
+
     salvar(){
         console.log(this.pesquisa.nome + ' ' + this.pesquisa.sobrenome )
     },

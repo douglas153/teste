@@ -41,6 +41,7 @@ export default {
                 {icon: 'mdi-bug' , text: 'About', route: '/about'},
                 {icon: 'mdi-briefcase' , text: 'Produtos', route: '/produtos'},
                 {icon: 'mdi-cloud' , text: 'Listas', route: '/listas'},
+                {icon: 'mdi-person' , text: 'Login', route: '/Registration'},
             ]
         }
     },
